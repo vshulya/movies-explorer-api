@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// const isUrl = require('validator/lib/isURL');
+const isUrl = require('validator/lib/isURL');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -25,34 +25,35 @@ const movieSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-    // validate: {
-    //   validator: (link) => isUrl(link),
-    //   message: 'Некорректный формат ссылки',
-    // },
+    validate: {
+      validator: (link) => isUrl(link),
+      message: 'Некорректный формат ссылки',
+    },
   },
-  trailerLink: {
+  trailer: {
     type: String,
     required: true,
-    // validate: {
-    //   validator: (link) => isUrl(link),
-    //   message: 'Некорректный формат ссылки',
-    // },
+    validate: {
+      validator: (link) => isUrl(link),
+      message: 'Некорректный формат ссылки',
+    },
   },
   thumbnail: {
     type: String,
     required: true,
-    // validate: {
-    //   validator: (link) => isUrl(link),
-    //   message: 'Некорректный формат ссылки',
-    // },
+    validate: {
+      validator: (link) => isUrl(link),
+      message: 'Некорректный формат ссылки',
+    },
   },
   owner: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
     required: true,
   },
-  movieId: {
-    // id фильма, который содержится в ответе сервиса MoviesExplorer.Обязательное поле.
-  },
+  // movieId: {
+  //   // id фильма, который содержится в ответе сервиса MoviesExplorer.Обязательное поле.
+  // },
   nameRU: {
     type: String,
     required: true,
