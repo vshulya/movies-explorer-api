@@ -19,7 +19,7 @@ router.post(
       director: Joi.string().required(),
       duration: Joi.number().required(),
       year: Joi.string().required(),
-      description: Joi.string().pattern(reg).required(),
+      description: Joi.string().required(),
       image: Joi.string().pattern(reg).required(),
       trailer: Joi.string().pattern(reg).required(),
       thumbnail: Joi.string().pattern(reg).required(),

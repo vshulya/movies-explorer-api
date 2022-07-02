@@ -28,9 +28,9 @@ module.exports.getMe = (req, res, next) => {
 
 // PATCH /users/me — update profile
 module.exports.updateUser = (req, res, next) => {
-  const { name, about } = req.body;
+  const { name, email } = req.body;
   // обновим имя найденного по _id пользователя
-  User.findByIdAndUpdate(req.user._id, { name, about }, {
+  User.findByIdAndUpdate(req.user._id, { name, email }, {
     new: true, runValidators: true,
   })
     .then((user) => {
