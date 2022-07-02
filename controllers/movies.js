@@ -12,7 +12,7 @@ module.exports.getMovies = (req, res, next) => {
   Movie.find({})
     .then((movies) => {
       movies.forEach((item) => item.owner.toString() === owner && myMovies.push(item));
-      res.status(201).send({ favoriteMovies: myMovies });
+      res.status(201).send({ Movies: myMovies });
     })
     // .populate('owner')
     // .then((movie) => res.send(movie))
