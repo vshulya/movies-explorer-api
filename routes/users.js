@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { celebrate, Joi } = require('celebrate');
 const {
   getMe,
   updateUser,
@@ -8,6 +9,15 @@ const {
 router.get('/me', getMe);
 
 // PATCH /users/me — update profile
-router.patch('/me', updateUser);
+router.patch(
+  '/me',
+  celebrate({
+    body: Joi.object().keys({
+      name: Joi.string().min(2).max(30),
+      email: Joi.string().required().email(),
+    }),
+  }),
+  updateUser,
+);
 
 module.exports.userRouter = router;

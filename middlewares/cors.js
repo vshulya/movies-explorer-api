@@ -1,10 +1,10 @@
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
 const allowedCors = [
-  'https://mesto.nomoreparties.sbs',
-  'https://api.mesto.nomoreparties.sbs',
-  'http://mesto.nomoreparties.sbs',
-  'http://api.mesto.nomoreparties.sbs',
+  'https://my-movies-explorer.nomoredomains.xyz',
+  'https://api.my-movies-explorer.nomoredomains.xyz',
+  'http://my-movies-explorer.nomoredomains.xyz',
+  'http://api.my-movies-explorer.nomoredomains.xyz',
   'localhost:3000',
 ];
 
