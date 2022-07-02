@@ -32,13 +32,17 @@ module.exports.getMe = (req, res, next) => {
 
 // PATCH /users/me — update profile
 module.exports.updateUser = (req, res, next) => {
-  const { name, email } = req.body;
+  const { _id, name, email } = req.body;
   // обновим имя найденного по _id пользователя
   User.findByIdAndUpdate(req.user._id, { name, email }, {
     new: true, runValidators: true,
   })
-    .then((user) => {
-      res.status(200).send(user);
+    .then(() => {
+      res.status(200).send({
+        _id,
+        email,
+        name,
+      });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
