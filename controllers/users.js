@@ -19,9 +19,9 @@ module.exports.getMe = (req, res, next) => {
   User.find({ _id })
     .then((user) => {
       if (!user) {
-        next(new NotFoundError('Пользователь не найден'));
+        return next(new NotFoundError('Пользователь не найден'));
       }
-      res.status(200).send(user);
+      return res.status(200).send(user);
     })
     .catch(next);
 };
@@ -42,16 +42,15 @@ module.exports.updateUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new ValidationError('Введены некорретные данные'));
+        return next(new ValidationError('Введены некорретные данные'));
       }
       if (err.name === 'CastError') {
-        next(new ValidationError('Id пользователя введено некорректно'));
+        return next(new ValidationError('Id пользователя введено некорректно'));
       }
       if (err.code === MONGO_DUPLICATE_KEY_CODE) {
-        next(new ConflictError('Пользователь с таким email уже существует'));
-      } else {
-        next(new ServerError());
+        return next(new ConflictError('Пользователь с таким email уже существует'));
       }
+      return next(new ServerError());
     });
 };
 
@@ -77,10 +76,9 @@ module.exports.createUser = (req, res, next) => {
       // данные не записались, вернём ошибку
       .catch((err) => {
         if (err.code === MONGO_DUPLICATE_KEY_CODE) {
-          next(new ConflictError('Пользователь с таким email уже существует'));
-        } else {
-          next(err);
+          return next(new ConflictError('Пользователь с таким email уже существует'));
         }
+        return next(err);
       });
   });
 };

@@ -53,10 +53,9 @@ module.exports.addMovie = (req, res, next) => {
     // данные не записались, вернём ошибку
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new ValidationError('Некорректные данные при создании фильма'));
-      } else {
-        next(new ServerError());
+        return next(new ValidationError('Некорректные данные при создании фильма'));
       }
+      return next(new ServerError());
     });
 };
 
@@ -77,11 +76,9 @@ module.exports.deleteMovie = (req, res, next) => {
       return next(new ForbiddenError('Нет прав для удаления этого фильма'));
     })
     .catch((err) => {
-      next(err);
       if (err.name === 'CastError') {
-        next(new ValidationError('Передан некорректный Id'));
-      } else {
-        next(new ServerError());
+        return next(new ValidationError('Передан некорректный Id'));
       }
+      return next(new ServerError());
     });
 };
