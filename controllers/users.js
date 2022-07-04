@@ -15,13 +15,12 @@ const saltRounds = 10;
 
 // GET /users/me - current user
 module.exports.getMe = (req, res, next) => {
-  const { _id } = req.body;
-  User.find({ _id })
+  User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
         next(new NotFoundError('Пользователь не найден'));
       }
-      return res.send({ data: user });
+      res.status(200).send(user);
     })
     .catch(next);
 };
@@ -78,8 +77,9 @@ module.exports.createUser = (req, res, next) => {
       .catch((err) => {
         if (err.code === MONGO_DUPLICATE_KEY_CODE) {
           next(new ConflictError('Пользователь с таким email уже существует'));
+        } else {
+          next(err);
         }
-        next(err);
       });
   });
 };

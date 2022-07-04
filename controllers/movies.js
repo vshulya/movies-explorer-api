@@ -14,14 +14,12 @@ module.exports.getMovies = (req, res, next) => {
       movies.forEach((item) => item.owner.toString() === owner && myMovies.push(item));
       res.status(201).send({ Movies: myMovies });
     })
-    // .populate('owner')
-    // .then((movie) => res.send(movie))
     .catch(next);
 };
 
 // POST /movies - saved movies
 module.exports.addMovie = (req, res, next) => {
-  const owner = req.user._id; // _id станет доступен TODO add   // movieId,
+  const owner = req.user._id; // _id станет доступен
   const {
     country,
     director,
@@ -30,6 +28,7 @@ module.exports.addMovie = (req, res, next) => {
     description,
     image,
     trailerLink,
+    movieId,
     nameRU,
     nameEN,
     thumbnail,
@@ -43,11 +42,11 @@ module.exports.addMovie = (req, res, next) => {
     description,
     image,
     trailerLink,
+    movieId,
     nameRU,
     nameEN,
     thumbnail,
     owner,
-    // movieId,
   })
     // вернём записанные в базу данные
     .then((movie) => res.status(201).send(movie))
@@ -67,7 +66,7 @@ module.exports.deleteMovie = (req, res, next) => {
   Movie.findById(movieId)
     .then((movie) => {
       if (!movie) {
-        next(new NotFoundError('Фильм не найден'));
+        return next(new NotFoundError('Фильм не найден'));
       }
       if (req.user._id === movie.owner.toString()) {
         return movie.remove()
