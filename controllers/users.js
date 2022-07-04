@@ -21,7 +21,7 @@ module.exports.getMe = (req, res, next) => {
       if (!user) {
         next(new NotFoundError('Пользователь не найден'));
       }
-      res.send(...user);
+      return res.send(...user);
     })
     .catch(next);
 };
@@ -60,10 +60,6 @@ module.exports.createUser = (req, res, next) => {
   const {
     email, password, name,
   } = req.body;
-  if (!email || !password) {
-    res.status(400).send({ message: 'Не передан email или пароль' });
-    return;
-  }
   bcrypt.hash(password, saltRounds).then((hash) => {
     // Store hash in your password DB.
     User.create({
