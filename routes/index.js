@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const mongoose = require('mongoose');
+
 const { celebrate, Joi } = require('celebrate');
 const NotFoundError = require('../errors/NotFoundError');
 
@@ -39,12 +39,6 @@ router.post(
 // routes w/ auth TODO add auth
 router.use('/users', auth, userRouter);
 router.use('/movies', auth, movieRouter);
-
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  autoIndex: true,
-});
 
 router.use((req, res, next) => {
   next(new NotFoundError('Такого адреса не существует'));
