@@ -15,17 +15,13 @@ const saltRounds = 10;
 
 // GET /users/me - current user
 module.exports.getMe = (req, res, next) => {
-  const { _id, name, email } = req.body;
+  const { _id } = req.body;
   User.find({ _id })
     .then((user) => {
       if (!user) {
         next(new NotFoundError('Пользователь не найден'));
       }
-      res.send({
-        _id,
-        email,
-        name,
-      });
+      res.send(...user);
     })
     .catch(next);
 };
@@ -50,6 +46,9 @@ module.exports.updateUser = (req, res, next) => {
       }
       if (err.name === 'CastError') {
         next(new ValidationError('Id пользователя введено некорректно'));
+      }
+      if (err.code === MONGO_DUPLICATE_KEY_CODE) {
+        next(new ConflictError('Пользователь с таким email уже существует'));
       } else {
         next(new ServerError());
       }

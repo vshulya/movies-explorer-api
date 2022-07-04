@@ -1,4 +1,5 @@
 require('dotenv').config();
+const mongoose = require('mongoose');
 
 const express = require('express');
 const { errors } = require('celebrate');
@@ -14,6 +15,11 @@ const { PORT = 3000 } = process.env;
 const app = express();
 app.use(express.json());
 app.use(cors);
+mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  autoIndex: true,
+});
 
 // request logger must be connected before all route handlers
 app.use(requestLogger);
