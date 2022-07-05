@@ -15,21 +15,14 @@ const saltRounds = 10;
 
 // GET /users/me - current user
 module.exports.getMe = (req, res, next) => {
-  User.findById(req.user._id)
+  const { _id } = req.user;
+  User.find({ _id })
     .then((user) => {
-      if (user) {
-        return res.status(200).send({ data: user });
+      if (!user) {
+        next(new NotFoundError('Пользователь не найден'));
       }
-      return next(new NotFoundError('Пользователь не найден'));
+      return res.send(...user);
     })
-  // const { _id } = req.user;
-  // User.find({ _id })
-  //   .then((user) => {
-  //     if (!user) {
-  //       return next(new NotFoundError('Пользователь не найден'));
-  //     }
-  //     return res.status(200).send({ data: user });
-  //   })
     .catch(next);
 };
 
