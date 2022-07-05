@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const express = require('express');
 const { errors } = require('celebrate');
-const { MONGO } = require('./utils/constants');
+const { MONGO_URL } = require('./utils/constants');
 
 const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -15,7 +15,7 @@ const { PORT = 3000 } = process.env;
 const app = express();
 app.use(express.json());
 app.use(cors);
-mongoose.connect(MONGO, {
+mongoose.connect(MONGO_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   autoIndex: true,

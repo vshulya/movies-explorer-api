@@ -37,8 +37,9 @@ router.post(
 );
 
 // routes w/ auth TODO add auth
-router.use('/users', auth, userRouter);
-router.use('/movies', auth, movieRouter);
+router.use(auth);
+router.use('/users', userRouter);
+router.use('/movies', movieRouter);
 
 router.use((req, res, next) => {
   next(new NotFoundError('Такого адреса не существует'));
