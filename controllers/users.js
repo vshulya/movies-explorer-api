@@ -18,8 +18,10 @@ module.exports.getMe = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (user) {
-        res.status(200).send({ data: user });
-      } else {
+        return res.status(200).send({ data: user });
+      }
+      return next(new NotFoundError('Пользователь не найден'));
+    })
   // const { _id } = req.user;
   // User.find({ _id })
   //   .then((user) => {
