@@ -12,12 +12,14 @@ const { PORT = 3000, MONGO_URL } = process.env;
 
 const app = express();
 app.use(express.json());
-app.use(cors);
+
 mongoose.connect(MONGO_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   autoIndex: true,
 });
+
+app.use(cors);
 
 // request logger must be connected before all route handlers
 app.use(requestLogger);
