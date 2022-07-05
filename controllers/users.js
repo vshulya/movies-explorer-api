@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { JWT_SECRET } = require('../utils/constants');
 
-const NotFoundError = require('../errors/NotFoundError');
+// const NotFoundError = require('../errors/NotFoundError');
 const ValidationError = require('../errors/ValidationError');
 const ServerError = require('../errors/ServerError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
@@ -17,11 +17,10 @@ const saltRounds = 10;
 module.exports.getMe = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
-      if (user) {
-        res.status(200).send({ data: user });
-      } else {
-        throw new NotFoundError('Пользователь не найден');
-      }
+      res.status(200).send({
+        email: user.email,
+        name: user.name,
+      });
     })
     .catch(next);
 };
