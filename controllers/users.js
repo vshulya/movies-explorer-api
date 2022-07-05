@@ -75,6 +75,9 @@ module.exports.createUser = (req, res, next) => {
       })
       // данные не записались, вернём ошибку
       .catch((err) => {
+        if (err.name === 'ValidationError') {
+          return next(new ValidationError('Введены некорретные данные'));
+        }
         if (err.code === MONGO_DUPLICATE_KEY_CODE) {
           return next(new ConflictError('Пользователь с таким email уже существует'));
         }
