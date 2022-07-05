@@ -3,14 +3,13 @@ const mongoose = require('mongoose');
 
 const express = require('express');
 const { errors } = require('celebrate');
-const { MONGO_URL } = require('./utils/constants');
 
 const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
 
 // Слушаем 3000 порт
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, MONGO_URL } = process.env;
 
 const app = express();
 app.use(express.json());
