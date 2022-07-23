@@ -5,7 +5,7 @@ const allowedCors = [
   'https://api.my-movies-explorer.nomoredomains.xyz',
   'http://my-movies-explorer.nomoredomains.xyz',
   'http://api.my-movies-explorer.nomoredomains.xyz',
-  'localhost:3000',
+  'http://localhost:3000',
 ];
 
 module.exports = (req, res, next) => {
