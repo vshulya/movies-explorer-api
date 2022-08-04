@@ -1,9 +1,9 @@
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
 const allowedCors = [
-  'https://my-movies-explorer.nomoredomains.xyz',
+  'https://moviesexplorer.nomoredomains.sbs',
   'https://api.my-movies-explorer.nomoredomains.xyz',
-  'http://my-movies-explorer.nomoredomains.xyz',
+  'http://moviesexplorer.nomoredomains.sbs',
   'http://api.my-movies-explorer.nomoredomains.xyz',
   'http://localhost:3000',
 ];
