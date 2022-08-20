@@ -1,8 +1,8 @@
 # movies-explorer-api
 
-A web application for searching and saving movie trailers with user registration and authentication. Deployed to a VPS. Stack used: Backend in Ubuntu/Nginx/Node.js/Express/MongoDB with a React.js frontend. \
+A web application for searching and saving movie trailers with user registration and authentication. Deployed to a VPS. Stack used: Backend in Ubuntu/Nginx/Node.js/Express/MongoDB with a React.js frontend. 
 
-Frontend https://github.com/vshulya/movies-explorer-frontend \
+Frontend https://github.com/vshulya/movies-explorer-frontend 
 
 ## Domaines
 Backend: https://api.my-movies-explorer.nomoredomains.xyz \
