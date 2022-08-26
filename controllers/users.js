@@ -28,7 +28,7 @@ module.exports.getMe = (req, res, next) => {
 // PATCH /users/me — update profile
 module.exports.updateUser = (req, res, next) => {
   const { _id, name, email } = req.body;
-  // обновим имя найденного по _id пользователя
+  // update user's name that we found by id
   User.findByIdAndUpdate(req.user._id, { name, email }, {
     new: true, runValidators: true,
   })
@@ -41,13 +41,13 @@ module.exports.updateUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new ValidationError('Введены некорретные данные'));
+        return next(new ValidationError('Invalid data'));
       }
       if (err.name === 'CastError') {
-        return next(new ValidationError('Id пользователя введено некорректно'));
+        return next(new ValidationError('Invalid id'));
       }
       if (err.code === MONGO_DUPLICATE_KEY_CODE) {
-        return next(new ConflictError('Пользователь с таким email уже существует'));
+        return next(new ConflictError('This email address is already being used'));
       }
       return next(new ServerError());
     });
@@ -63,7 +63,7 @@ module.exports.createUser = (req, res, next) => {
     User.create({
       email, password: hash, name,
     })
-      // вернём записанные в базу данные
+      // return data in DB
       .then((user) => {
         const { _id } = user;
         res.status(201).send({
@@ -72,13 +72,13 @@ module.exports.createUser = (req, res, next) => {
           name,
         });
       })
-      // данные не записались, вернём ошибку
+      // something went wrong, return an error
       .catch((err) => {
         if (err.name === 'ValidationError') {
-          return next(new ValidationError('Введены некорретные данные'));
+          return next(new ValidationError('Invalid data'));
         }
         if (err.code === MONGO_DUPLICATE_KEY_CODE) {
-          return next(new ConflictError('Пользователь с таким email уже существует'));
+          return next(new ConflictError('This email address is already being used'));
         }
         return next(err);
       });
@@ -91,14 +91,13 @@ module.exports.login = (req, res, next) => {
 
   User.findUserByCredentials(email, password)
     .then((user) => {
-      // создадим токен
+      // create token
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
-      // вернём токен
+      // return token
       res.send({ token });
     })
     .catch(() => {
-      // ошибка аутентификации
-      next(new UnauthorizedError('Неверный логин или пароль'));
+      next(new UnauthorizedError('Invalid email or password'));
     })
     .catch(next);
 };

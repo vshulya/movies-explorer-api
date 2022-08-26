@@ -42,7 +42,7 @@ router.use('/users', userRouter);
 router.use('/movies', movieRouter);
 
 router.use((req, res, next) => {
-  next(new NotFoundError('Такого адреса не существует'));
+  next(new NotFoundError('Page not found'));
 });
 
 module.exports = router;

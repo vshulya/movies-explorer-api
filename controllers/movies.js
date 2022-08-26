@@ -19,7 +19,7 @@ module.exports.getMovies = (req, res, next) => {
 
 // POST /movies - saved movies
 module.exports.addMovie = (req, res, next) => {
-  const owner = req.user._id; // _id станет доступен
+  const owner = req.user._id;
   const {
     country,
     director,
@@ -48,12 +48,12 @@ module.exports.addMovie = (req, res, next) => {
     thumbnail,
     owner,
   })
-    // вернём записанные в базу данные
+    // return data in DB
     .then((movie) => res.status(201).send(movie))
-    // данные не записались, вернём ошибку
+    // something went wrong, return an error
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new ValidationError('Некорректные данные при создании фильма'));
+        return next(new ValidationError('Invalid data for creating movie'));
       }
       return next(new ServerError());
     });
@@ -65,19 +65,19 @@ module.exports.deleteMovie = (req, res, next) => {
   Movie.findById(movieId)
     .then((movie) => {
       if (!movie) {
-        return next(new NotFoundError('Фильм не найден'));
+        return next(new NotFoundError('Movie not found'));
       }
       if (req.user._id === movie.owner.toString()) {
         return movie.remove()
           .then(() => {
-            res.send({ message: 'Фильм удален' });
+            res.send({ message: 'Movie has been deleted' });
           });
       }
-      return next(new ForbiddenError('Нет прав для удаления этого фильма'));
+      return next(new ForbiddenError('Do not have permission to delete this movie'));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return next(new ValidationError('Передан некорректный Id'));
+        return next(new ValidationError('Invalid id'));
       }
       return next(new ServerError());
     });

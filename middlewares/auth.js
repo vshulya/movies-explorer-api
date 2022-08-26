@@ -18,7 +18,7 @@ module.exports.auth = (req, res, next) => {
     throw next(new UnauthorizedError('Error Parsing JWT token.'));
   }
 
-  req.user = payload; // записываем пейлоуд в объект запроса
+  req.user = payload; // a request payload
 
-  next(); // пропускаем запрос дальше
+  next();
 };
