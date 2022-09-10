@@ -6,6 +6,8 @@ const allowedCors = [
   'http://moviesexplorer.nomoredomains.sbs',
   'http://api.my-movies-explorer.nomoredomains.xyz',
   'http://localhost:3000',
+  'http://140.82.42.116/',
+  'http://140.82.42.116/movies-explorer',
 ];
 
 module.exports = (req, res, next) => {
